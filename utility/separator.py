@@ -50,7 +50,7 @@ class SeparatorLayer(nn.Module):
         return output
 
 
-# spectral & temporal module
+# Spectral & temporal module
 class RNNModule(nn.Module):
     "Unfold -> LN -> BLSTM -> Deconv1D -> residual"
 
@@ -205,13 +205,13 @@ class PositionalMultiHeadAttention(nn.Module):
         return output
     
 if __name__ == "__main__":
-    # test RNNModule
+    # Test RNNModule
     # rnn_module = RNNModule(hidden_size=256)
     # x = torch.rand(3, 32, 1001, 129)
     # y = rnn_module(x)
     # print(y.shape)
 
-    # test MultiheadAttention
+    # Test MultiheadAttention
     B, D, T, F = 3, 32, 1001, 129
     x = torch.randn(B,D,T,F)
     model = PositionalMultiHeadAttention(h=4, d_model=D, d_q=4, F=F)

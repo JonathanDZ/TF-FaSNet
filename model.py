@@ -18,9 +18,9 @@ class EncoderSeparatorDecoder(nn.Module):
     
     def forward(self, mix_audio):
         """
-        input: 
+        Input: 
             mix_audio: Batch, nmic, T
-        output:
+        Output:
             separated_audio: Batch, nspk, T
         """
         enc_output, XrMM, ref_enc = self.encode(mix_audio)
@@ -206,7 +206,7 @@ class Decoder(nn.Module):
         return self.dropout2(x)
     
 
-def make_TF_FaSNet(nmic=6, nspk=2, n_fft=256, embed_dim=16, dim_nb=64, dim_ffn=128, n_conv_layers=2, B=4, I=8, J=1, H=128, E=4, L=4):
+def make_TF_FaSNet(nmic=6, nspk=2, n_fft=256, embed_dim=16, dim_nb=32, dim_ffn=64, n_conv_layers=2, B=4, I=8, J=1, H=128, E=4, L=4):
     "Helper: Construct TF-FaSNet model from hyperparameters"
     F = n_fft//2 + 1
 
@@ -237,10 +237,10 @@ if __name__ == "__main__":
     test_model = make_TF_FaSNet()
     test_model.eval()
 
-    # check model size
+    # Check model size
     print(check_parameters(test_model))
 
-    # test full model
+    # Test full model
     mix_audio = torch.randn(3,6,64000)
     separated_audio = test_model(mix_audio)
     print(separated_audio.shape)

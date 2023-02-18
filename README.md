@@ -1,7 +1,5 @@
 # Time-Frequency Domain Filter-and-Sum Network for Multi-channel Speech Separation
 
-<!-- This repository provides the model implementation for the paper "Time-Frequency Domain Filter-and-Sum Network for Multi-channel Speech Separation". In this paper, we introduce a novel approach to multi-channel speech separation that improves upon implicit Filter-and-Sum Network (iFaSNet). Our approach involves transforming each module of the iFaSNet architecture to perform separation in the time-frequency domain.  The experimental results indicate that our proposed method is superior under the experimental conditions considered. -->
-
 This repository contains the model implementation for the paper titled "Time-Frequency Domain Filter-and-Sum Network for Multi-channel Speech Separation." Our paper proposes a new approach to multi-channel speech separation, building upon the implicit Filter-and-Sum Network (iFaSNet). We achieve this by converting each module of the iFaSNet architecture to perform separation in the time-frequency domain. Our experimental results indicate that our method is superior under the considered conditions.
 
 # Model
@@ -23,7 +21,7 @@ The following flowchart depicts the TF-FaSNet model.
 
 # Usage
 
-A minimum implemention of the TF-FaSNet model can be found in `model.py`.
+A minimum implementation of the TF-FaSNet model can be found in `model.py`.
 
 ## Requirement
 
@@ -33,11 +31,11 @@ A minimum implemention of the TF-FaSNet model can be found in `model.py`.
 
 ## Dataset
 
-The model is evaluated on a simulated 6-mic circular array dataset. The dataset generation script is availiable at [here](https://github.com/yluo42/TAC/tree/master/data).
+The model is evaluated on a simulated 6-mic circular array dataset. The data generation script is availiable at [here](https://github.com/yluo42/TAC/tree/master/data).
 
 ## Model configurations
 
-To use our model
+To use our model:
 ``` python
 mix_audio = torch.randn(3,6,64000)
 test_model = make_TF_FaSNet(
@@ -47,7 +45,7 @@ test_model = make_TF_FaSNet(
     )
 separated_audio = test_model(mix_audio)
 ```
-Each variable is stand for:
+Each variable stands for:
 
 - General config
     - `nmic`: Number of microphones
