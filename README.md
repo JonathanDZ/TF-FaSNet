@@ -15,7 +15,7 @@ We propose the following improvements to enhance the performance of the iFaSNet 
 - Use narrow-band feature extraction to exploit inter-channel cues of different speakers
 - Add a convolution module at the end of the separation module to capture local interactions and features.
 
-The figure below shows the flowchart of TF-FaSNet model.
+The following flowchart depicts the TF-FaSNet model.
 
 <p align="center">
     <img src="flowchart.png"  width="60%" height="30%">
@@ -23,15 +23,46 @@ The figure below shows the flowchart of TF-FaSNet model.
 
 # Usage
 
-The implemention of the TF-FaSNet model can be found in **model.py**.
+A minimum implemention of the TF-FaSNet model can be found in `model.py`.
 
+## Requirement
+
+- torch==1.13.1
+- torchaudio==0.13.1
+- positional-encodings==6.0.1
+
+## Dataset
+
+The model is evaluated on a simulated 6-mic circular array dataset. The dataset generation script is availiable at [here](https://github.com/yluo42/TAC/tree/master/data).
+
+## Model configurations
+
+To use our model
 ``` python
-# test full model
 mix_audio = torch.randn(3,6,64000)
-test_model = make_TF_FasNet_4(
-    nmic=6, nspk=2, n_fft=256, 
-    D=16, B=4, I=8, J=1, H=128, E=4, L=4
+test_model = make_TF_FaSNet(
+    nmic=6, nspk=2, n_fft=256, embed_dim=16,
+    dim_nb=32, dim_ffn=64, n_conv_layers=2, 
+    B=4, I=8, J=1, H=128, E=4, L=4
     )
 separated_audio = test_model(mix_audio)
 ```
+Each variable is stand for:
 
+- General config
+    - `nmic`: Number of microphones
+    - `nspk`: Number of speakers
+    - `n_fft`: Number of fft points
+    - `embed_dim`: Embedding dimension for each T-F unit
+- Encoder-decoder:
+    - `dim_nb`: Number of hidden units in Narrow-band feature extraction module
+    - `dim_fft`: Number of hidden units between two linear layers in context decoding module
+    - `n_conv_layers`: Number of convolution blocks in context decoding module
+- Multi-path separation module:
+    - `B`: Number of multi-path blocks
+    - `I`: Kernel size for Unfold and Deconv
+    - `J`: Stride size for Unfold and Deconv
+    - `H`: Number of hidden units in BLSTM
+    - `L`: Number of heads in self-attention
+
+With this configuration, we achieve an average 15.5 dB SI-SNR improvement on the simulated 6-mic circular-array dataset with a model size of 2.5M.
