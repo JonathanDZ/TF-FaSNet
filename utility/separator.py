@@ -168,7 +168,7 @@ class PositionalMultiHeadAttention(nn.Module):
         self.d_q = d_q
         self.d_k = d_q
         self.d_v = d_model // h
-        self.RPE_size = F*d_q # FXE in paper
+        self.RPE_size = F*d_q # FXE
 
         self.q_proj = MultiHeadGenerator(d_model, self.d_q, F, h)
         self.k_proj = MultiHeadGenerator(d_model, self.d_k, F, h)
@@ -187,7 +187,7 @@ class PositionalMultiHeadAttention(nn.Module):
             mask = mask.unsqueeze(1)
         batch, _, T, F = x.shape
 
-        # do all the projections in batch
+        # Do all the projections in batch
         query = self.q_proj(self.p_enc_2d(x)) # B, N, T, FXE
         key = self.k_proj(self.p_enc_2d(x)) # B, N, T, FXE
         value = self.v_proj(x) # B, N, T, FX(D/L)

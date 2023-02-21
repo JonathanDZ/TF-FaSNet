@@ -23,7 +23,7 @@ The following flowchart depicts the TF-FaSNet model.
 
 A minimum implementation of the TF-FaSNet model can be found in `model.py`.
 
-## Requirement
+## Requirements
 
 - torch==1.13.1
 - torchaudio==0.13.1
@@ -31,7 +31,7 @@ A minimum implementation of the TF-FaSNet model can be found in `model.py`.
 
 ## Dataset
 
-The model is evaluated on a simulated 6-mic circular array dataset. The data generation script is availiable at [here](https://github.com/yluo42/TAC/tree/master/data).
+The model is evaluated on a simulated 6-mic circular array dataset. The data generation script is available at [here](https://github.com/yluo42/TAC/tree/master/data).
 
 ## Model configurations
 
@@ -50,12 +50,12 @@ Each variable stands for:
 - General config
     - `nmic`: Number of microphones
     - `nspk`: Number of speakers
-    - `n_fft`: Number of fft points
+    - `n_fft`: Number of FFT points
     - `embed_dim`: Embedding dimension for each T-F unit
 - Encoder-decoder:
-    - `dim_nb`: Number of hidden units in Narrow-band feature extraction module
+    - `dim_nb`: Number of hidden units in the Narrow-band feature extraction module
     - `dim_fft`: Number of hidden units between two linear layers in context decoding module
-    - `n_conv_layers`: Number of convolution blocks in context decoding module
+    - `n_conv_layers`: Number of convolution blocks in the context decoding module
 - Multi-path separation module:
     - `B`: Number of multi-path blocks
     - `I`: Kernel size for Unfold and Deconv
@@ -63,4 +63,4 @@ Each variable stands for:
     - `H`: Number of hidden units in BLSTM
     - `L`: Number of heads in self-attention
 
-With this configuration, we achieve an average 15.5 dB SI-SNR improvement on the simulated 6-mic circular-array dataset with a model size of 2.5M.
+With these configurations, we achieve an average 15.5 dB SI-SNR improvement on the simulated 6-mic circular-array dataset with a model size of 2.5M.

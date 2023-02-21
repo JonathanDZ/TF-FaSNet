@@ -101,11 +101,11 @@ class Encoder(nn.Module):
         # View as real
         output = torch.view_as_real(output) # [B, F, TF, C, 2]
 
-        # 1) get ref channel encoding
+        # 1) Get ref channel encoding
         ref_enc = output[:,:,:,ref_channel,:].clone().permute(0,3,2,1).contiguous() # batch, 2, TF, n_fft/2 + 1
         ref_enc = self.conv2d_1(ref_enc) # batch, embed_dim, TF, n_fft/2 + 1
 
-        # 2）get all channel narrow-band encoding
+        # 2）Get all channel narrow-band encoding
         nb_enc_input = output.view(batch*F, TF, nmic*2).transpose(1,2).contiguous() # batch*n_fft/2+1, nmic*2, TF
         nb_enc_input = self.conv1d(nb_enc_input) # batch*nfft/2+1, embed_dim, TF
         nb_enc = nb_enc_input.transpose(1,2).contiguous() # batch*nfft/2+1, TF, embed_dim
@@ -119,7 +119,7 @@ class Encoder(nn.Module):
         nb_enc = self.deconv1d(nb_enc) # batch*nfft/2+1, embed_dim, TF
         nb_enc = nb_enc.view(batch, F, self.embed_dim, TF).permute(0,2,3,1).contiguous() # batch, embed_dim, TF, n_fft/2+1
 
-        # 3) concat two encodings to get a ifasnet-like encoding
+        # 3) Concat two encodings to get a ifasnet-like encoding
         all_enc = torch.cat([ref_enc, nb_enc], 1) # # batch, 2*embed_dim, TF, n_fft/2+1
         all_enc = self.conv2d_2(all_enc)
         all_enc = self.gLN(all_enc)
