@@ -41,7 +41,7 @@ mix_audio = torch.randn(3,6,64000)
 test_model = make_TF_FaSNet(
     nmic=6, nspk=2, n_fft=256, embed_dim=16,
     dim_nb=32, dim_ffn=64, n_conv_layers=2, 
-    B=4, I=8, J=1, H=128, E=4, L=4
+    B=4, I=8, J=1, H=128, L=4
     )
 separated_audio = test_model(mix_audio)
 ```
