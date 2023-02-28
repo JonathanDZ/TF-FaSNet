@@ -68,8 +68,8 @@ With these configurations, we achieve an average 15.5 dB SI-SNR improvement on t
 # Miscellaneous
 
 Given a $D \times T \times F$ tensor, we apply 2D positional encoding as follows:
-$$PE(t,f,2i) = sin(x/10000^{4i/D}) \\
-PE(t,f,2i+1) = cos(x/10000^{4i/D}) \\
-PE(t,f,2j+D/2) = sin(y/10000^{4j/D}) \\
+$$PE(t,f,2i) = sin(x/10000^{4i/D}) \\\\
+PE(t,f,2i+1) = cos(x/10000^{4i/D}) \\\\
+PE(t,f,2j+D/2) = sin(y/10000^{4j/D}) \\\\
 PE(t,f,2j+1+D/2) = cos(y/10000^{4j/D})$$
 where $t$ indexes $T$ frames, $f$ indexes $F$ frequencies, and $i,j \in [0, D/4)$ specify the dimension. 
