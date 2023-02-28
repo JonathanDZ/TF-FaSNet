@@ -4,7 +4,7 @@ This repository contains the model implementation for the paper titled "Time-Fre
 
 # Model
 
-We implement the Time-Frequency Domain Filter-and-Sum Network (TF-FaSNet) based on iFaSNet's overall structure. The network performs end-to-end multi-channel speech separation in the time-frequency domain. Refer to the original paper for more information.
+We implement the Time-Frequency Domain Filter-and-Sum Network (TF-FaSNet) based on iFaSNet's overall structure. The network performs multi-channel speech separation in the time-frequency domain. Refer to the original paper for more information.
 
 We propose the following improvements to enhance the performance of the iFaSNet model for separating mixtures:
 
@@ -64,3 +64,16 @@ Each variable stands for:
     - `L`: Number of heads in self-attention
 
 With these configurations, we achieve an average 15.5 dB SI-SNR improvement on the simulated 6-mic circular-array dataset with a model size of 2.5M.
+
+# Miscellaneous
+
+Given a $D \times T \times F$ tensor, we apply 2D positional encoding as follows:
+$$
+\begin{align*}
+PE(t,f,2i) = sin(x/10000^{4i/D}) \\
+PE(t,f,2i+1) = cos(x/10000^{4i/D}) \\
+PE(t,f,2j+D/2) = sin(y/10000^{4j/D}) \\
+PE(t,f,2j+1+D/2) = cos(y/10000^{4j/D})
+\end{align*}
+$$
+where $t$ indexes $T$ frames, $f$ indexes $F$ frequencies, and $i,j \in [0, D/4)$ specify the dimension. 

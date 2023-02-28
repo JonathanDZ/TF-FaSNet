@@ -120,7 +120,7 @@ class Encoder(nn.Module):
         nb_enc = nb_enc.view(batch, F, self.embed_dim, TF).permute(0,2,3,1).contiguous() # batch, embed_dim, TF, n_fft/2+1
 
         # 3) Concat two encodings to get a ifasnet-like encoding
-        all_enc = torch.cat([ref_enc, nb_enc], 1) # # batch, 2*embed_dim, TF, n_fft/2+1
+        all_enc = torch.cat([ref_enc, nb_enc], 1) # batch, 2*embed_dim, TF, n_fft/2+1
         all_enc = self.conv2d_2(all_enc)
         all_enc = self.gLN(all_enc)
 
@@ -147,7 +147,7 @@ class Decoder(nn.Module):
             convs.append(nn.SiLU())
         self.conv = nn.Sequential(*convs)
 
-        self.dropout1 = nn.Dropout(dropout)
+        # self.dropout1 = nn.Dropout(dropout)
         self.linear2 = nn.Linear(dim_ffn, 2*embed_dim)
         self.dropout2 = nn.Dropout(dropout)
 
@@ -200,7 +200,7 @@ class Decoder(nn.Module):
         x = x.transpose(1,3).contiguous() # B, 2*D, T, F
         x = self.conv(x)
         x = x.transpose(1,3).contiguous() # B, F, T, 2*D
-        x = self.dropout1(x)
+        # x = self.dropout1(x)
         x = self.linear2(x)
         x = x.transpose(1,3).contiguous() # B, 2*D, T, F 
         return self.dropout2(x)
